@@ -48,8 +48,8 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
                        sh "docker build -t amazon-prime-video ."
-                       sh "docker tag amazon-prime-video aseemakram19/amazon-prime-video:latest "
-                       sh "docker push aseemakram19/amazon-prime-video:latest "
+                       sh "docker tag amazon-prime-video thamminenisimhachalam/amazon-prime-video:latest "
+                       sh "docker push thamminenisimhachalam/amazon-prime-video:latest "
                     }
                 }
             }
@@ -58,9 +58,9 @@ pipeline{
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview aseemakram19/amazon-prime-video:latest'
-                       sh 'docker-scout cves aseemakram19/amazon-prime-video:latest'
-                       sh 'docker-scout recommendations aseemakram19/amazon-prime-video:latest'
+                       sh 'docker-scout quickview thamminenisimhachalam/amazon-prime-video:latest'
+                       sh 'docker-scout cves thamminenisimhachalam/amazon-prime-video:latest'
+                       sh 'docker-scout recommendations thamminenisimhachalam/amazon-prime-video:latest'
                    }
                 }
             }
@@ -68,12 +68,12 @@ pipeline{
 
         stage("TRIVY-docker-images"){
             steps{
-                sh "trivy image aseemakram19/amazon-prime-video:latest > trivyimage.txt" 
+                sh "trivy image thamminenisimhachalam/amazon-prime-video:latest > trivyimage.txt" 
             }
         }
         stage('App Deploy to Docker container'){
             steps{
-                sh 'docker run -d --name amazon-prime-video -p 3000:3000 aseemakram19/amazon-prime-video:latest'
+                sh 'docker run -d --name amazon-prime-video -p 3000:3000 thamminenisimhachalam/amazon-prime-video:latest'
             }
         }
 
